@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/check-db', function () {
+    try {
+        DB::connection()->getPdo();
+        $dbName = DB::connection()->getDatabaseName();
+        return "✅ Koneksi database berhasil. Terhubung ke database: <strong>$dbName</strong>";
+    } catch (\Exception $e) {
+        return "❌ Gagal terkoneksi ke database: " . $e->getMessage();
+    }
+});
